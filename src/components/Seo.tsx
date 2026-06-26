@@ -10,6 +10,7 @@ interface SeoProps {
 
 export function Seo({ title, description, path }: SeoProps) {
   const url = `${SITE_URL}${path}`;
+  const image = `${SITE_URL}/og.png`;
   return (
     <Helmet>
       <title>{title}</title>
@@ -19,9 +20,11 @@ export function Seo({ title, description, path }: SeoProps) {
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:url" content={url} />
+      <meta property="og:image" content={image} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
     </Helmet>
   );
 }
