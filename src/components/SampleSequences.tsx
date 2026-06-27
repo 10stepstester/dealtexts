@@ -1,4 +1,5 @@
-import { ChefHat, Truck, Store, Target, type LucideIcon } from "lucide-react";
+import { useState } from "react";
+import { ChefHat, Truck, Store, Target, Sparkles, type LucideIcon } from "lucide-react";
 import { LeadForm } from "./LeadForm";
 
 interface Sample {
@@ -6,7 +7,8 @@ interface Sample {
   Icon: LucideIcon;
   stat: string;
   tunedTo: string;
-  body: React.ReactNode;
+  rep: string;
+  rest: React.ReactNode;
 }
 
 function Mark({ children }: { children: React.ReactNode }) {
@@ -21,11 +23,12 @@ const SAMPLES: Sample[] = [
     Icon: ChefHat,
     stat: "replied in 9 min",
     tunedTo: "deposit-to-payroll gap",
-    body: (
+    rep: "Tony",
+    rest: (
       <>
-        Hey — Tony w/ Summit. Most owners I work with aren&rsquo;t short on covers,
-        they&rsquo;re short on cash <Mark>between the deposit and payroll</Mark>. We bridge
-        that — funded a walk-in cooler for a spot down the street{" "}
+        Most owners I work with aren&rsquo;t short on covers, they&rsquo;re short on cash{" "}
+        <Mark>between the deposit and payroll</Mark>. We bridge that — funded a walk-in
+        cooler for a spot down the street{" "}
         <Mark>without touching their credit line</Mark>. Worth a look?
       </>
     ),
@@ -35,12 +38,13 @@ const SAMPLES: Sample[] = [
     Icon: Truck,
     stat: "5.8x reply rate",
     tunedTo: "factoring lag",
-    body: (
+    rep: "Dana",
+    rest: (
       <>
-        Hey — Dana w/ Summit. Owner-ops tell me the same thing: load&rsquo;s booked, but
-        you&rsquo;re floating fuel and a <Mark>$4k repair</Mark> while{" "}
-        <Mark>factoring drags 30 days</Mark>. We advance against what&rsquo;s already
-        coming, so a breakdown doesn&rsquo;t park the truck. Open to terms?
+        Owner-ops tell me the same thing: load&rsquo;s booked, but you&rsquo;re floating
+        fuel and a <Mark>$4k repair</Mark> while <Mark>factoring drags 30 days</Mark>. We
+        advance against what&rsquo;s already coming, so a breakdown doesn&rsquo;t park the
+        truck. Open to terms?
       </>
     ),
   },
@@ -49,18 +53,21 @@ const SAMPLES: Sample[] = [
     Icon: Store,
     stat: "replied same day",
     tunedTo: "pre-season inventory",
-    body: (
+    rep: "Marcus",
+    rest: (
       <>
-        Hey — Marcus w/ Summit. Q4 is won in Q3 — but{" "}
-        <Mark>the inventory order lands before the sales do</Mark>. We front the buy so
-        you&rsquo;re not choosing between stock and rent. Funded a dozen shops{" "}
-        <Mark>ahead of the holiday rush</Mark>. Quick look?
+        Q4 is won in Q3 — but <Mark>the inventory order lands before the sales do</Mark>.
+        We front the buy so you&rsquo;re not choosing between stock and rent. Funded a dozen
+        shops <Mark>ahead of the holiday rush</Mark>. Quick look?
       </>
     ),
   },
 ];
 
 export function SampleSequences() {
+  const [company, setCompany] = useState("");
+  const displayCompany = company.trim() || "Summit";
+
   return (
     <section
       id="sample"
@@ -78,7 +85,23 @@ export function SampleSequences() {
           to how each kind of merchant actually thinks about cash.
         </p>
 
-        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Live personalization — put their own shop name in every sample */}
+        <div className="mt-6 inline-flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2">
+          <span className="flex items-center gap-1.5 text-sm font-semibold text-brand-bright">
+            <Sparkles size={15} /> See it as
+          </span>
+          <input
+            type="text"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+            placeholder="your shop's name"
+            aria-label="Your company name"
+            maxLength={28}
+            className="w-44 rounded-lg border border-white/15 bg-white/5 px-3 py-1.5 text-sm text-screen placeholder:text-ink-faint focus:border-brand-bright focus:outline-none focus:ring-2 focus:ring-brand-bright/40"
+          />
+        </div>
+
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {SAMPLES.map((s) => (
             <div key={s.vertical} className="rounded-2xl bg-screen p-5 text-ink">
               <div className="flex items-center justify-between">
@@ -88,7 +111,8 @@ export function SampleSequences() {
                 <span className="text-xs font-semibold text-ink-faint">{s.stat}</span>
               </div>
               <div className="mt-3 rounded-2xl rounded-tl-md border border-black/10 bg-white p-4 text-[14.5px] leading-relaxed">
-                {s.body}
+                Hey — {s.rep} w/{" "}
+                <span className="font-semibold text-brand">{displayCompany}</span>. {s.rest}
               </div>
               <p className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-ink-soft">
                 <Target size={14} className="text-brand" /> Tuned to {s.tunedTo}
