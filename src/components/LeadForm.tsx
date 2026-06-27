@@ -3,7 +3,12 @@ import { ArrowRight, Check, Loader2 } from "lucide-react";
 
 type Status = "idle" | "loading" | "done" | "error";
 
-export function LeadForm() {
+interface LeadFormProps {
+  /** Button label. Defaults to a non-promissory CTA (we never auto-text the visitor). */
+  cta?: string;
+}
+
+export function LeadForm({ cta = "Get my free sample" }: LeadFormProps) {
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState<Status>("idle");
 
@@ -31,8 +36,8 @@ export function LeadForm() {
           <Check size={18} className="text-screen" strokeWidth={3} />
         </span>
         <p className="text-sm text-screen">
-          Got it — we&rsquo;ll text a sample sequence to{" "}
-          <span className="font-semibold">{phone}</span> shortly.
+          Got it — we&rsquo;ll reach out within one business day with a sample built for
+          your vertical. A real person, no autodialer.
         </p>
       </div>
     );
@@ -71,7 +76,7 @@ export function LeadForm() {
           </>
         ) : (
           <>
-            Text me a sample <ArrowRight size={18} strokeWidth={2.4} />
+            {cta} <ArrowRight size={18} strokeWidth={2.4} />
           </>
         )}
       </button>

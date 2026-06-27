@@ -12,6 +12,7 @@ import { Nav } from "../components/Nav";
 import { Footer } from "../components/Footer";
 import { SmsThread } from "../components/SmsThread";
 import { LeadForm } from "../components/LeadForm";
+import { SampleSequences } from "../components/SampleSequences";
 
 const STEPS = [
   {
@@ -234,28 +235,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FINAL CTA */}
-      <section
-        id="sample"
-        className="border-t border-white/10 bg-[radial-gradient(700px_400px_at_50%_120%,var(--color-backdrop-2),var(--color-backdrop))]"
-      >
-        <div className="mx-auto max-w-2xl px-5 py-24 text-center sm:px-8">
-          <h2 className="font-display text-4xl font-semibold leading-tight sm:text-5xl">
-            See a sequence built for your vertical — free.
-          </h2>
-          <p className="mt-5 text-lg leading-relaxed text-ink-faint">
-            Drop your number. We&rsquo;ll text you a sample DealTexts sequence for the
-            merchant type you fund most, so you can see the difference before you decide.
-          </p>
-          <div className="mx-auto mt-8 max-w-md text-left">
-            <LeadForm />
-            <p className="mt-3 text-xs leading-relaxed text-ink-faint">
-              By submitting you agree to receive a sample sequence by text. Msg &amp; data
-              rates may apply. Reply STOP to opt out.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* SAMPLES + soft lead capture */}
+      <SampleSequences />
 
       <Footer />
     </>
